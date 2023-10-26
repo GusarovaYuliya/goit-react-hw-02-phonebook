@@ -1,81 +1,62 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
+import ContactForm from './ContactForm/ContactForm'
 import { nanoid } from 'nanoid';
-import { ContactForm } from './ContactForm/ContactForm';
-import { Filter } from './Filter/Filter';
-import { ContactList } from './ContactList/ContactList';
+import Search from "./Search/Search";
+import ContactList from "./ContactList/ContactList";
+import css from 'App.module.css'
 
-export class App extends Component {
+class App extends Component{
+
   state = {
     contacts: [
-      { id: 'id-1', name: 'Rosie Simpson', number: '459-12-56' },
-      { id: 'id-2', name: 'Hermione Kline', number: '443-89-12' },
-      { id: 'id-3', name: 'Eden Clements', number: '645-17-79' },
-      { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
-    ],
+    { id: 'id-1', name: 'Rosie Simpson', number: '459-12-56' },
+    {id: 'id-2', name: 'Hermione Kline', number: '443-89-12'},
+    {id: 'id-3', name: 'Eden Clements', number: '645-17-79'},
+    {id: 'id-4', name: 'Annie Copeland', number: '227-91-26'},],
+
     filter: '',
-    name: '',
-    number: '',
   };
 
-  handleChange = e => {
-    const { name, value } = e.target;
-    this.setState({ [name]: value });
-  };
-
-  handleSubmit = e => {
-    const id = nanoid();
-    const name = e.name;
-    const number = e.number;
-    const contactsLists = [...this.state.contacts];
-
-    if (contactsLists.findIndex(contact => name === contact.name) !== -1) {
-      alert(`${name} is already in contacts.`);
-    } else {
-      contactsLists.push({ name, id, number });
+  handleDeleteUser = id => {
+    if (window.confirm('Are you sure?')) {
+      this.setState({
+        contacts: [...this.state.contacts.filter(user => user.id !== id)],
+      });
     }
-
-    this.setState({ contacts: contactsLists });
   };
 
-  handleDelete = e => {
-    this.setState(prevState => ({
-      contacts: prevState.contacts.filter(contact => contact.id !== e),
-    }));
-  };
-
-  getFilteredContacts = () => {
-    const filterContactsList = this.state.contacts.filter(contact => {
-      return contact.name
-        .toLowerCase()
-        .includes(this.state.filter.toLowerCase());
+  createUser = data => {
+    this.setState({
+      contacts: [
+        ...this.state.contacts,
+        { name: data.name, id: nanoid(), number: data.number },
+      ],
     });
+  };
 
-    return filterContactsList;
+  handlerSearch = e => {
+    this.setState({ filter: e.currentTarget.value });
   };
 
   render() {
-    const { filter } = this.state;
-
     return (
-      <div
-        style={{
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'center',
-          alignItems: 'center',
-          fontSize: 20,
-          color: '#010101',
-        }}
-      >
-        <h1>Phonebook</h1>
-        <ContactForm handleSubmit={this.handleSubmit} />
-        <h2> Contacts</h2>
-        <Filter filter={filter} handleChange={this.handleChange} />
+      <div className={css.appContainer}>
+        <h1 className={css.titleText}>Phone book</h1>
+        <ContactForm
+          createUser={this.createUser}
+          userNumber={this.state.number}
+          userName={this.state.name}
+          contacts={this.state.contacts} />
+         <p className={css.searchText}>Find contacts by name</p>
+        <Search onChange={this.handlerSearch} value={this.state.filter} />
         <ContactList
-          contacts={this.getFilteredContacts()}
-          handleDelete={this.handleDelete}
+          handleDeleteUser={this.handleDeleteUser}
+          contacts={this.state.contacts}
+          filter={this.state.filter}
         />
       </div>
     );
-  }
+  };
 }
+
+export default App;

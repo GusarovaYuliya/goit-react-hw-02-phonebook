@@ -1,40 +1,34 @@
-.form {
+.contactForm {
     display: flex;
     flex-direction: column;
 }
 
-.formName,
-.formNumber {
-    display: flex;
-    flex-direction: column;
-    margin: 0.5rem auto;
-    align-items: center;
-    font-size: large;
-    text-align: left;
-    padding: 0.5rem 15rem 0.5rem 1rem;
+.addBtn {
+    width: 110px;
+    height: 40px;
+    border: 1px solid rgb(36, 24, 11);
+    border-radius: 4px;
+    margin: 20px auto;
+    background-color: rgb(242, 144, 46);
+    cursor: pointer;
+    margin-top: 40px;
+    margin-bottom: 60px;
+
+    font-size: 16px;
+    font-weight: bold;
+
+
 }
 
-.formBtn {
-    margin-top: 1rem;
-    margin-bottom: 2rem;
-    background-color: rgba(46, 5, 46, 0.8);
-    border: none;
-    border-radius: 7px;
-    color: #fff;
-    flex-grow: 1;
-    font-family: SFProText-Regular, Helvetica, Arial, sans-serif;
-    font-size: 15px;
-    height: 36px;
-    line-height: 15px;
-    margin-left: 8px;
-    margin-right: 6px;
-    min-width: 185px;
-    padding: 0 16px 0 16px;
-    color: white;
-    cursor: pointer;
+p {
+    font-size: 16px;
+    font-weight: bold;
 }
 
-.formBtn:hover {
-    background-color: rgb(112, 24, 106);
-    cursor: pointer;
+input {
+    border-radius: 10px;
+    border: rgb(3, 2, 1);
+    height: 32px;
+    width: 300px;
 }
+
