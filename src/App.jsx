@@ -20,7 +20,6 @@ class App extends Component{
   handleDeleteUser = id => {
     if (window.confirm('Are you sure?')) {
       this.setState({
-        contacts: [...this.state.contacts.filter(user => user.id !== id)],
       });
     }
   };
